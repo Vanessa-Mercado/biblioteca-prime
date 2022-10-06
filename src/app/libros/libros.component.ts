@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Libro} from '../interfaces/libro.interface';
+import { Libro } from '../interfaces/libro.interface';
 import { LibrosService } from '../servicios/libros.service';
 
 @Component({
@@ -9,9 +9,11 @@ import { LibrosService } from '../servicios/libros.service';
 })
 export class LibrosComponent implements OnInit {
 
-  
+
   listaLibros: Libro[] = [];
-  cargando: boolean = false;
+  listaLibro: Libro[] = []; //Aqui se guarda la lista de libros
+  cargando: boolean = false; //Esta variable muestra la animacion de carga
+  dialogoVisible: boolean = false; //Indica si el dialogo esta visible u oculto
 
   constructor(
     private servicioLibros: LibrosService
@@ -24,7 +26,7 @@ export class LibrosComponent implements OnInit {
   cargarLibros(): void{
     this.cargando = true;
     this.servicioLibros.get().subscribe({
-      next: (datos) =>{
+      next: (datos) => {
         this.listaLibros = datos;
         this.cargando = false;
       },
@@ -34,9 +36,10 @@ export class LibrosComponent implements OnInit {
       }
     });
   }
+  mostrarDialogo(){
+    this.dialogoVisible = true;
+  }
 }
-   
-
 
 
 
