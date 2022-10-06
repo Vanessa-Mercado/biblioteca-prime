@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Libro } from '../interfaces/libro.interface';
+import { Libro} from '../interfaces/libro.interface';
 import { LibrosService } from '../servicios/libros.service';
 
 @Component({
@@ -9,15 +9,35 @@ import { LibrosService } from '../servicios/libros.service';
 })
 export class LibrosComponent implements OnInit {
 
+  
   listaLibros: Libro[] = [];
+  cargando: boolean = false;
 
   constructor(
-    private serviciolibros: LibrosService
+    private servicioLibros: LibrosService
   ) { }
 
   ngOnInit(): void {
+    this.cargarLibros();
   }
 
+  cargarLibros(): void{
+    this.cargando = true;
+    this.servicioLibros.get().subscribe({
+      next: (datos) =>{
+        this.listaLibros = datos;
+        this.cargando = false;
+      },
+      error: (e) => {
+        console.log(e);
+        this.cargando = false;
+      }
+    });
+  }
 }
+   
+
+
+
 
 
