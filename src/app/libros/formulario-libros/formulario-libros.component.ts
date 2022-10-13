@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {  EventEmitter, Output } from '@angular/core';
 import { Message } from 'primeng/api';
 import { Libro } from 'src/app/interfaces/libro.interface';
 import { LibrosService } from 'src/app/servicios/libros.service';
@@ -8,21 +9,25 @@ import { LibrosService } from 'src/app/servicios/libros.service';
   templateUrl: './formulario-libros.component.html',
   styleUrls: ['./formulario-libros.component.css']
 })
-export class FormularioLibroComponent implements OnInit {
+ export class FormularioLibroComponent implements OnInit {
 
-  codigo: number | null = null;
-  titulo: string | null = null;
-  autor: string | null = null;
-  paginas: number | null = null;
+  codigo: number | null=null;
+   titulo: string | null=null;
+   autor: string | null=null;
+   paginas: number | null=null;
 
-  codigoValido: boolean = true;
-  tituloValido: boolean = true;
-  autorValido: boolean = true;
-  paginasValido: boolean = true;
-
+   codigoValido: boolean=true;
+   tituloValido: boolean=true;
+   autorValido: boolean=true;
+   paginasValidas: boolean=true;
+ 
   guardando: boolean = false;
   mensajes: Message[] = [];
 
+  @Output()
+  recargarLibros: EventEmitter<boolean> = new EventEmitter();
+  
+ 
   constructor(
     private servicioLibros: LibrosService
   ) { }
@@ -31,7 +36,7 @@ export class FormularioLibroComponent implements OnInit {
   }
 
   guardar() {
-    if(this.validar()){
+   if(this.validar()){
       const libro: Libro = {
         id: this.codigo,
         titulo: this.titulo,
@@ -42,23 +47,39 @@ export class FormularioLibroComponent implements OnInit {
       this.servicioLibros.post(libro).subscribe({
         next: ()=>{
           this.guardando = false;
-          this.mensajes=[{severity: 'success', summary: 'Éxito', detail: 'Se registró el Libro'}];
+          this.mensajes=[{severity: 'success', summary: 'Éxito', detail: 'Se registró el libro'}];
+        this.recargarLibros.emit(true);
         },
         error: (e) => {
           this.guardando = false;
-          this.mensajes=[{severity: 'error', summary: 'Error al registrar', detail: e.error}];
+          console.log(e)
+          this.mensajes=[{severity: 'error', summary: 'Error al registrar', detail: e.error }];
         }
       });
     }
   }
 
   validar(): boolean {
-    this.codigoValido = this.codigo !== null
+    this.codigoValido = this.codigo !== null;
     this.tituloValido = this.titulo !== null && this.titulo?.length > 0;
     this.autorValido = this.autor !== null && this.autor?.length > 0;
-    this.paginasValido = this.titulo !== null;
-    return this.codigoValido && this.tituloValido && this.autorValido && this.paginasValido;
+    this.paginasValidas = this.paginas !== null;
+    return this.codigoValido && this.tituloValido && this.autorValido && this.paginasValidas;
   }
 
+  limpiarFormulario(){
+this.codigo = null;
+this.titulo = null;
+this.autor = null;
+this.paginas = null;
+
+this.codigoValido = true;
+this.tituloValido = true;
+this.autorValido = true;
+this.paginasValidas = true;
+
+this.mensajes = [];
 }
+
+  }
 
