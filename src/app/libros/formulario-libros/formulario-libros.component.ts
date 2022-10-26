@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {  EventEmitter, Output } from '@angular/core';
+import { Component,EventEmitter,Output, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
 import { Libro } from 'src/app/interfaces/libro.interface';
 import { LibrosService } from 'src/app/servicios/libros.service';
@@ -24,7 +23,8 @@ import { LibrosService } from 'src/app/servicios/libros.service';
   guardando: boolean = false;
   mensajes: Message[] = [];
 
-  @Output()
+  modo : 'Registrador' | 'Editar' = 'Registrador' ;
+  
   recargarLibros: EventEmitter<boolean> = new EventEmitter();
   
  
@@ -56,7 +56,46 @@ import { LibrosService } from 'src/app/servicios/libros.service';
           this.mensajes=[{severity: 'error', summary: 'Error al registrar', detail: e.error }];
         }
       });
+      if(this.modo === 'Registrador'){
+        this.registrar(libro);
+      }else
+      this.editar(libro);
     }
+  }
+
+  private registrar(libro: Libro){
+    this.guardando = true;
+    this.servicioLibros.post(libro).subscribe({
+      
+      next: ()=>{
+        this.guardando = false;
+        this.mensajes=[{severity: 'success', summary: 'Éxito', detail: 'Se registró el libro'}];
+      this.recargarLibros.emit(true);
+      },
+      error: (e) => {
+        this.guardando = false;
+        console.log(e)
+        this.mensajes=[{severity: 'error', summary: 'Error al registrar', detail: e.error }];
+      }
+    });
+  }
+
+  private editar(libro: Libro){
+
+this.guardando = true;
+this.servicioLibros.put(libro).subscribe({
+  next: () => {
+    this.guardando = false;
+    this.mensajes = [{severity: 'success', summary: 'Éxito', detail: 'Se editó el libro'}];
+    this.recargarLibros.emit(true);
+  },
+  error: (e) => {
+    this.guardando = false;
+    console.log(e)
+    this.mensajes = [{severity: 'error', summary: 'Error al editar', detail: e.error}];
+
+  }
+});
   }
 
   validar(): boolean {
@@ -80,6 +119,10 @@ this.paginasValidas = true;
 
 this.mensajes = [];
 }
-
   }
 
+
+function Salida() {
+  throw new Error('Function not implemented.');
+}
+     
