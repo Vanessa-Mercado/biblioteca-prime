@@ -17,7 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MessagesModule } from 'primeng/messages';
 import { FormularioLibroComponent } from './libros/formulario-libros/formulario-libros.component';
-
+import { ConfirmationService } from 'primeng/api';
+import {  ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,13 +27,14 @@ import { FormularioLibroComponent } from './libros/formulario-libros/formulario-
     FormularioLibroComponent
   ],
   imports: [
+
     BrowserModule,
     AppRoutingModule,
     ButtonModule,
     MenubarModule,
     HttpClientModule,
     TableModule,
-    
+
     CardModule,
     DialogModule,
     BrowserAnimationsModule,
@@ -40,8 +42,10 @@ import { FormularioLibroComponent } from './libros/formulario-libros/formulario-
     InputNumberModule,
     FormsModule,
     MessagesModule,
+    ConfirmDialogModule
+  
   ],
-  providers: [],
+  providers: [ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

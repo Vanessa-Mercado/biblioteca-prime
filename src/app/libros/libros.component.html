@@ -1,17 +1,17 @@
 <div class="tarjeta">
     <div style="margin-bottom: 15px;">
 
-        <button pButton label="Agregar" icon="pi pi-plus" (click)="mostrarDialogo()">
+        <button pButton label="Agregar" icon="pi pi-plus" (click)="nuevo()">
         </button>
     </div>
 
     <p-messages [(value)]="mensajes"></p-messages>
-    
+
     <p-table [value]="listaLibros" [loading]="cargando" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
         responsiveLayout="scrool">
         <ng-template pTemplate="header">
             <tr>
-                <th>Código</th>
+            
                 <th>Título</th>
                 <th>Autor</th>
                 <th>Nro. Páginas</th>
@@ -27,15 +27,14 @@
                 <td>
                     <button pButton type="button" icon="pi pi-pencil" style="margin-right: 5px"
                         (click)="editar(libro)"></button>
-                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger"></button>
+                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger"
+                        (click)="eliminar(libro)"></button>
                 </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
-<p-dialog header="Registrar Libro" [(visible)]="dialogoVisible">
-
-    <app-formulario-libro (recargarLibros)="cargarLibros()"></app-formulario-libro>
-    <p-dialog [header]="tituloDialogo" [(visible)]="dialogoVisible" [modal]="true">
-        <app-formulario-libro #formulario (recargarLibros)="cargarLibros()"></app-formulario-libro>
-    </p-dialog>
+<p-dialog [header]="tituloDialogo" [(visible)]="dialogoVisible" [modal]="true">
+    <app-formulario-libro #formulario (recargarLibros)="cargarLibros()"></app-formulario-libro>
+</p-dialog>
+<p-confirmDialog header="confirmar" icon="pi pi-exclamation-triangle"></p-confirmDialog>
