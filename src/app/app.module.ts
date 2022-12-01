@@ -19,6 +19,7 @@ import { MessagesModule } from 'primeng/messages';
 import { FormularioLibroComponent } from './libros/formulario-libros/formulario-libros.component';
 import { ConfirmationService } from 'primeng/api';
 import {  ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import {  ConfirmDialogModule } from 'primeng/confirmdialog';
     InputNumberModule,
     FormsModule,
     MessagesModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DropdownModule
   
   ],
   providers: [ConfirmationService],

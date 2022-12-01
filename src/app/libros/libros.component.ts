@@ -54,6 +54,7 @@ export class LibrosComponent implements OnInit {
   nuevo() {
     this.tituloDialogo = 'Registrar libro';
     this.formLibro.limpiarFormulario();
+    this.formLibro.cargarAutores();
     this.formLibro.modo = 'Registrador';
     this.dialogoVisible = true;
   }
@@ -61,9 +62,10 @@ export class LibrosComponent implements OnInit {
   editar(libro: Libro) {
     this.formLibro.codigo = libro.id;
     this.formLibro.titulo = libro.titulo;
-    this.formLibro.autor = libro.autor;
+    this.formLibro.idautor = libro.idautor;
     this.formLibro.paginas = libro.paginas;
     this.formLibro.modo = "Editar";
+    this.formLibro.cargarAutores();
     this.dialogoVisible = true;
     this.tituloDialogo = "Editar libros";
   }
