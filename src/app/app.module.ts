@@ -20,12 +20,16 @@ import { FormularioLibroComponent } from './libros/formulario-libros/formulario-
 import { ConfirmationService } from 'primeng/api';
 import {  ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { LoginComponent } from './login/login.component';
+import { MainAppComponent } from './main-app/main-app.component';
 @NgModule({
   declarations: [
     AppComponent,
     LibrosComponent,
     AutoresComponent,
-    FormularioLibroComponent
+    FormularioLibroComponent,
+    LoginComponent,
+    MainAppComponent
   ],
   imports: [
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuItem, PrimeIcons } from 'primeng/api';
+
 
 @Component({
   selector: 'app-root',
@@ -11,24 +11,8 @@ export class AppComponent {
     throw new Error('Method not implemented.');
   }
 
-  items: MenuItem[] = [
-    {
-      label: "Biblioteca",
-      icon: PrimeIcons.BOOK,
-      items: [
-        {
-          label: "Libros",
-          icon: PrimeIcons.BOOKMARK,
-          routerLink:['libros']
-        },
-        {
-          label: "Autores",
-          icon: PrimeIcons.USERS,
-          routerLink:['autores']
-        }
-      ]
-    }
-  ];
+  
+  
 
 }
 
